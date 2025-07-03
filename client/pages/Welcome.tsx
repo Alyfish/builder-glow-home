@@ -3,46 +3,36 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import HouseAnimation from "@/components/HouseAnimation";
 
-const FloatingIcon = ({
-  children,
-  delay = 0,
-  x,
-  y,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  x: string;
-  y: string;
-}) => (
-  <div
-    className="absolute animate-bounce"
-    style={{
-      left: x,
-      top: y,
-      animationDelay: `${delay}s`,
-      animationDuration: "3s",
-    }}
-  >
-    {children}
-  </div>
-);
-
 export default function Welcome() {
   const navigate = useNavigate();
-  const [showContent, setShowContent] = useState(false);
+  const [animationStage, setAnimationStage] = useState(0);
+  const [showHouseAnimation, setShowHouseAnimation] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
 
-  const handleAnimationComplete = () => {
-    setShowContent(true);
-  };
-
-  // Auto-navigate to animation screen after showing the current layout
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate("/animation");
+    // Stage 0: Show initial layout for 2 seconds
+    const timer1 = setTimeout(() => {
+      setAnimationStage(1); // Start dot movement and text fade
+    }, 2000);
+
+    // Stage 1: Dot moves up, text fades (1 second)
+    const timer2 = setTimeout(() => {
+      setAnimationStage(2); // Dot reaches center
+      setShowHouseAnimation(true); // Start house building
     }, 3000);
 
-    return () => clearTimeout(timer);
-  }, [navigate]);
+    // Stage 2: House animation completes (5 seconds)
+    const timer3 = setTimeout(() => {
+      setAnimationStage(3); // Show buttons
+      setShowButtons(true);
+    }, 8000);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, []);
 
   return (
     <div
@@ -76,18 +66,79 @@ export default function Welcome() {
 
       {/* Main content */}
       <div className="flex flex-col items-center justify-center h-full px-8 relative z-10">
-        {/* Large centered dot */}
-        <div className="mb-16"></div>
+        {/* Initial layout: Spaces text + dot side by side */}
+        {animationStage === 0 && (
+          <div className="flex flex-row items-center">
+            <div className="text-center">
+              <div className="text-5xl font-light tracking-wide text-black">
+                Spaces
+              </div>
+            </div>
+            <div className="w-8 h-8 bg-red-500 rounded-full animate-pulse mt-3 ml-4"></div>
+          </div>
+        )}
 
-        {/* Main text with dot - Coinbase style */}
-        <div className="flex flex-row">
-          <div className="text-center">
-            <div className="text-5xl font-light tracking-wide text-black">
-              <p>Spaces</p>
+        {/* Transition stage: Dot moves up, text fades */}
+        {animationStage === 1 && (
+          <>
+            {/* Fading "Spaces" text */}
+            <div className="text-center transition-opacity duration-1000 opacity-0">
+              <div className="text-5xl font-light tracking-wide text-black">
+                Spaces
+              </div>
+            </div>
+
+            {/* Moving dot */}
+            <div
+              className="w-8 h-8 bg-red-500 rounded-full animate-pulse absolute transition-all duration-1000 ease-out"
+              style={{
+                transform: "translateY(-150px)",
+                left: "50%",
+                marginLeft: "-16px",
+              }}
+            ></div>
+          </>
+        )}
+
+        {/* House animation stage */}
+        {animationStage >= 2 && (
+          <div className="flex flex-col items-center">
+            {/* Centered dot that becomes house origin */}
+            <div className="mb-4">
+              {!showHouseAnimation && (
+                <div className="w-8 h-8 bg-red-500 rounded-full animate-pulse"></div>
+              )}
+
+              {/* 3D House building animation */}
+              {showHouseAnimation && (
+                <div className="relative">
+                  <HouseAnimation loop={false} />
+                  {/* Keep a small dot at center */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-red-500 rounded-full"></div>
+                </div>
+              )}
             </div>
           </div>
-          <div className="w-8 h-8 bg-red-500 rounded-full animate-pulse mt-3 ml-auto mr-auto"></div>
-        </div>
+        )}
+
+        {/* Action buttons - fade in after house animation */}
+        {showButtons && (
+          <div className="w-full max-w-sm space-y-4 mt-8 transition-all duration-1000 ease-out opacity-100 transform translate-y-0">
+            <Button
+              className="w-full bg-red-500 text-white hover:bg-red-600 font-medium py-4 text-base rounded-2xl transition-all duration-200 hover:scale-105"
+              onClick={() => alert("Create account functionality")}
+            >
+              Create new account
+            </Button>
+
+            <button
+              className="w-full text-black text-base font-medium py-4 hover:text-gray-600 transition-all duration-200 hover:scale-105"
+              onClick={() => alert("Sign in functionality")}
+            >
+              I already have an account
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Bottom attribution */}
