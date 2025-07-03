@@ -5,7 +5,10 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-8">
+    <div
+      className="h-screen bg-black text-white flex flex-col items-center justify-center px-8"
+      style={{ height: "844px", width: "390px", margin: "0 auto" }}
+    >
       {/* iPhone status bar */}
       <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-6 py-3 text-sm font-medium">
         <span>9:41</span>
