@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HouseAnimation from "@/components/HouseAnimation";
 
 const FloatingIcon = ({
@@ -34,6 +34,15 @@ export default function Welcome() {
   const handleAnimationComplete = () => {
     setShowContent(true);
   };
+
+  // Auto-navigate to next screen after showing the current layout
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/next");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
   return (
     <div
