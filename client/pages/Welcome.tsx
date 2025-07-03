@@ -35,10 +35,10 @@ export default function Welcome() {
     setShowContent(true);
   };
 
-  // Auto-navigate to next screen after showing the current layout
+  // Auto-navigate to animation screen after showing the current layout
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/next");
+      navigate("/animation");
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -86,14 +86,14 @@ export default function Welcome() {
               <p>Spaces</p>
             </div>
           </div>
-          <div className="w-8 h-8 bg-blue-500 rounded-full animate-pulse mt-3 ml-auto mr-auto"></div>
+          <div className="w-8 h-8 bg-red-500 rounded-full animate-pulse mt-3 ml-auto mr-auto"></div>
         </div>
       </div>
 
       {/* Bottom attribution */}
       <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-black/60">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+          <div className="w-4 h-4 bg-red-500 rounded-full"></div>
           <span>Spaces AI</span>
         </div>
         <div className="flex items-center gap-2">

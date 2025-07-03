@@ -36,10 +36,10 @@ export default function Next() {
 
       {/* Main content */}
       <div className="flex flex-col items-center justify-center h-full px-8 relative z-10">
-        {/* Blue dot positioned on top of Spaces */}
+        {/* Red dot positioned on top of Spaces */}
         <div className="text-center">
           {/* Dot on top */}
-          <div className="w-8 h-8 bg-blue-500 rounded-full mx-auto mb-4 animate-pulse"></div>
+          <div className="w-8 h-8 bg-red-500 rounded-full mx-auto mb-4 animate-pulse"></div>
 
           {/* Spaces text below */}
           <h1 className="text-5xl font-light tracking-wide text-black">
@@ -50,7 +50,7 @@ export default function Next() {
         {/* Action buttons */}
         <div className="w-full max-w-sm space-y-4 mt-16">
           <Button
-            className="w-full bg-blue-500 text-white hover:bg-blue-600 font-medium py-4 text-base rounded-2xl"
+            className="w-full bg-red-500 text-white hover:bg-red-600 font-medium py-4 text-base rounded-2xl"
             onClick={() => alert("Create account functionality")}
           >
             Create new account
@@ -68,7 +68,7 @@ export default function Next() {
       {/* Bottom attribution */}
       <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-xs text-black/60">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+          <div className="w-4 h-4 bg-red-500 rounded-full"></div>
           <span>Spaces AI</span>
         </div>
         <div className="flex items-center gap-2">
