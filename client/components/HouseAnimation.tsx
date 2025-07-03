@@ -38,49 +38,66 @@ export default function HouseAnimation({
     camera.position.set(0, 2, 8);
     camera.lookAt(0, 0, 0);
 
-    // Central dot/sphere
+    // Central dot/sphere (Airbnb red)
     const dotGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-    const dotMaterial = new THREE.MeshBasicMaterial({ color: 0x3b82f6 });
+    const dotMaterial = new THREE.MeshBasicMaterial({ color: 0xef4444 });
     const centralDot = new THREE.Mesh(dotGeometry, dotMaterial);
     scene.add(centralDot);
 
-    // Line material
+    // Line material (Airbnb red)
     const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x3b82f6,
-      linewidth: 2,
+      color: 0xef4444,
+      linewidth: 3,
     });
 
-    // House structure points (relative to center)
+    // Enhanced 3D house structure points
     const housePoints = [
-      // Foundation square
-      { start: [0, 0, 0], end: [-1.5, -1, 0], delay: 0 },
-      { start: [0, 0, 0], end: [1.5, -1, 0], delay: 0.2 },
-      { start: [0, 0, 0], end: [1.5, -1, -1.5], delay: 0.4 },
-      { start: [0, 0, 0], end: [-1.5, -1, -1.5], delay: 0.6 },
+      // Foundation square (front to back)
+      { start: [0, 0, 0], end: [-1.8, -1.2, 0.8], delay: 0 },
+      { start: [0, 0, 0], end: [1.8, -1.2, 0.8], delay: 0.1 },
+      { start: [0, 0, 0], end: [1.8, -1.2, -0.8], delay: 0.2 },
+      { start: [0, 0, 0], end: [-1.8, -1.2, -0.8], delay: 0.3 },
 
-      // Connecting foundation
-      { start: [-1.5, -1, 0], end: [1.5, -1, 0], delay: 0.8 },
-      { start: [1.5, -1, 0], end: [1.5, -1, -1.5], delay: 1.0 },
-      { start: [1.5, -1, -1.5], end: [-1.5, -1, -1.5], delay: 1.2 },
-      { start: [-1.5, -1, -1.5], end: [-1.5, -1, 0], delay: 1.4 },
+      // Foundation connecting lines
+      { start: [-1.8, -1.2, 0.8], end: [1.8, -1.2, 0.8], delay: 0.4 },
+      { start: [1.8, -1.2, 0.8], end: [1.8, -1.2, -0.8], delay: 0.5 },
+      { start: [1.8, -1.2, -0.8], end: [-1.8, -1.2, -0.8], delay: 0.6 },
+      { start: [-1.8, -1.2, -0.8], end: [-1.8, -1.2, 0.8], delay: 0.7 },
 
-      // Walls (vertical lines)
-      { start: [-1.5, -1, 0], end: [-1.5, 1, 0], delay: 1.6 },
-      { start: [1.5, -1, 0], end: [1.5, 1, 0], delay: 1.8 },
-      { start: [1.5, -1, -1.5], end: [1.5, 1, -1.5], delay: 2.0 },
-      { start: [-1.5, -1, -1.5], end: [-1.5, 1, -1.5], delay: 2.2 },
+      // Vertical walls
+      { start: [-1.8, -1.2, 0.8], end: [-1.8, 1.2, 0.8], delay: 0.8 },
+      { start: [1.8, -1.2, 0.8], end: [1.8, 1.2, 0.8], delay: 0.9 },
+      { start: [1.8, -1.2, -0.8], end: [1.8, 1.2, -0.8], delay: 1.0 },
+      { start: [-1.8, -1.2, -0.8], end: [-1.8, 1.2, -0.8], delay: 1.1 },
 
-      // Top edges
-      { start: [-1.5, 1, 0], end: [1.5, 1, 0], delay: 2.4 },
-      { start: [1.5, 1, 0], end: [1.5, 1, -1.5], delay: 2.6 },
-      { start: [1.5, 1, -1.5], end: [-1.5, 1, -1.5], delay: 2.8 },
-      { start: [-1.5, 1, -1.5], end: [-1.5, 1, 0], delay: 3.0 },
+      // Top frame
+      { start: [-1.8, 1.2, 0.8], end: [1.8, 1.2, 0.8], delay: 1.2 },
+      { start: [1.8, 1.2, 0.8], end: [1.8, 1.2, -0.8], delay: 1.3 },
+      { start: [1.8, 1.2, -0.8], end: [-1.8, 1.2, -0.8], delay: 1.4 },
+      { start: [-1.8, 1.2, -0.8], end: [-1.8, 1.2, 0.8], delay: 1.5 },
 
-      // Roof
-      { start: [-1.5, 1, 0], end: [0, 2, -0.75], delay: 3.2 },
-      { start: [1.5, 1, 0], end: [0, 2, -0.75], delay: 3.4 },
-      { start: [1.5, 1, -1.5], end: [0, 2, -0.75], delay: 3.6 },
-      { start: [-1.5, 1, -1.5], end: [0, 2, -0.75], delay: 3.8 },
+      // Roof peak and supports
+      { start: [-1.8, 1.2, 0.8], end: [0, 2.4, 0], delay: 1.6 },
+      { start: [1.8, 1.2, 0.8], end: [0, 2.4, 0], delay: 1.7 },
+      { start: [1.8, 1.2, -0.8], end: [0, 2.4, 0], delay: 1.8 },
+      { start: [-1.8, 1.2, -0.8], end: [0, 2.4, 0], delay: 1.9 },
+
+      // Door frame
+      { start: [0, -1.2, 0.8], end: [0, 0.4, 0.8], delay: 2.0 },
+      { start: [-0.4, -1.2, 0.8], end: [-0.4, 0.4, 0.8], delay: 2.1 },
+      { start: [0.4, -1.2, 0.8], end: [0.4, 0.4, 0.8], delay: 2.2 },
+      { start: [-0.4, 0.4, 0.8], end: [0.4, 0.4, 0.8], delay: 2.3 },
+
+      // Windows
+      { start: [-1.2, 0.2, 0.8], end: [-0.6, 0.2, 0.8], delay: 2.4 },
+      { start: [-1.2, 0.8, 0.8], end: [-0.6, 0.8, 0.8], delay: 2.5 },
+      { start: [-1.2, 0.2, 0.8], end: [-1.2, 0.8, 0.8], delay: 2.6 },
+      { start: [-0.6, 0.2, 0.8], end: [-0.6, 0.8, 0.8], delay: 2.7 },
+
+      { start: [0.6, 0.2, 0.8], end: [1.2, 0.2, 0.8], delay: 2.8 },
+      { start: [0.6, 0.8, 0.8], end: [1.2, 0.8, 0.8], delay: 2.9 },
+      { start: [0.6, 0.2, 0.8], end: [0.6, 0.8, 0.8], delay: 3.0 },
+      { start: [1.2, 0.2, 0.8], end: [1.2, 0.8, 0.8], delay: 3.1 },
     ];
 
     const lines: THREE.Line[] = [];

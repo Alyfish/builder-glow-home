@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import HouseAnimation from "@/components/HouseAnimation";
 
 export default function Animation() {
   const navigate = useNavigate();
@@ -159,72 +160,72 @@ export default function Animation() {
 
       {/* Main content */}
       <div className="flex flex-col items-center justify-center h-full px-8 relative z-10">
-        {/* Spaces text */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-light tracking-wide text-black mb-4">
-            Spaces
-          </h1>
+        {/* 3D House building animation positioned above title */}
+        <div className="mb-8">
+          {animationStage === 0 && (
+            <div className="w-8 h-8 bg-red-500 rounded-full mx-auto animate-pulse mb-4"></div>
+          )}
 
-          {/* Dot with blast animation */}
-          <div className="relative">
-            {animationStage === 0 && (
-              <div className="w-8 h-8 bg-red-500 rounded-full mx-auto animate-pulse"></div>
-            )}
+          {animationStage === 1 && (
+            <div className="relative mb-4">
+              {/* Central blast dot */}
+              <div className="w-8 h-8 bg-red-500 rounded-full mx-auto animate-ping"></div>
 
-            {animationStage === 1 && (
-              <div className="relative">
-                {/* Central blast dot */}
-                <div className="w-8 h-8 bg-red-500 rounded-full mx-auto animate-ping"></div>
-
-                {/* Blast particles */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div
-                    className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
-                    style={{
-                      top: "-10px",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                    }}
-                  ></div>
-                  <div
-                    className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
-                    style={{
-                      bottom: "-10px",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      animationDelay: "0.1s",
-                    }}
-                  ></div>
-                  <div
-                    className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
-                    style={{
-                      left: "-10px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      animationDelay: "0.2s",
-                    }}
-                  ></div>
-                  <div
-                    className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
-                    style={{
-                      right: "-10px",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      animationDelay: "0.3s",
-                    }}
-                  ></div>
-                </div>
+              {/* Blast particles */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div
+                  className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
+                  style={{
+                    top: "-10px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
+                  style={{
+                    bottom: "-10px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    animationDelay: "0.1s",
+                  }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
+                  style={{
+                    left: "-10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    animationDelay: "0.2s",
+                  }}
+                ></div>
+                <div
+                  className="w-2 h-2 bg-red-400 rounded-full absolute animate-ping"
+                  style={{
+                    right: "-10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    animationDelay: "0.3s",
+                  }}
+                ></div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+
+          {/* 3D House building animation */}
+          {showHouse && (
+            <div className="mb-4">
+              <HouseAnimation loop={false} />
+            </div>
+          )}
         </div>
 
-        {/* House building animation */}
-        {showHouse && (
-          <div className="mt-8">
-            <HouseBuildingAnimation />
-          </div>
-        )}
+        {/* Spaces text positioned below the animation */}
+        <div className="text-center">
+          <h1 className="text-5xl font-light tracking-wide text-black">
+            Spaces
+          </h1>
+        </div>
       </div>
 
       {/* Bottom attribution */}
