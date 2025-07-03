@@ -51,14 +51,14 @@ export default function Next() {
         <div className="w-full max-w-sm space-y-4 mt-16">
           <Button
             className="w-full bg-blue-500 text-white hover:bg-blue-600 font-medium py-4 text-base rounded-2xl"
-            onClick={() => navigate("/signup")}
+            onClick={() => alert("Create account functionality")}
           >
             Create new account
           </Button>
 
           <button
             className="w-full text-black text-base font-medium py-4 hover:text-gray-600 transition-colors"
-            onClick={() => navigate("/signin")}
+            onClick={() => alert("Sign in functionality")}
           >
             I already have an account
           </button>
