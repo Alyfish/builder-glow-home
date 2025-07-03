@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import HouseAnimation from "@/components/HouseAnimation";
 
 const FloatingIcon = ({
   children,
@@ -26,84 +27,19 @@ const FloatingIcon = ({
   </div>
 );
 
-const HouseBuildingAnimation = () => {
-  const [buildStage, setBuildStage] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBuildStage((prev) => (prev + 1) % 4);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="relative w-16 h-16 mx-auto mb-8">
-      {/* Foundation line */}
-      <div
-        className={`absolute bottom-0 left-1/4 right-1/4 h-0.5 bg-blue-400 transition-all duration-500 ${
-          buildStage >= 0 ? "w-8 opacity-100" : "w-0 opacity-0"
-        }`}
-      />
-
-      {/* Left wall */}
-      <div
-        className={`absolute bottom-0 left-1/4 w-0.5 bg-blue-400 transition-all duration-500 ${
-          buildStage >= 1 ? "h-6 opacity-100" : "h-0 opacity-0"
-        }`}
-      />
-
-      {/* Right wall */}
-      <div
-        className={`absolute bottom-0 right-1/4 w-0.5 bg-blue-400 transition-all duration-500 ${
-          buildStage >= 1 ? "h-6 opacity-100" : "h-0 opacity-0"
-        }`}
-      />
-
-      {/* Roof line 1 */}
-      <div
-        className={`absolute bottom-6 left-1/4 w-4 h-0.5 bg-blue-400 origin-left transition-all duration-500 ${
-          buildStage >= 2 ? "rotate-45 opacity-100" : "rotate-0 opacity-0"
-        }`}
-      />
-
-      {/* Roof line 2 */}
-      <div
-        className={`absolute bottom-6 right-1/4 w-4 h-0.5 bg-blue-400 origin-right transition-all duration-500 ${
-          buildStage >= 3 ? "-rotate-45 opacity-100" : "rotate-0 opacity-0"
-        }`}
-      />
-
-      {/* Door */}
-      <div
-        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2 bg-blue-400 transition-all duration-500 ${
-          buildStage >= 2 ? "h-4 opacity-100" : "h-0 opacity-0"
-        }`}
-      />
-
-      {/* Sparkle effect */}
-      {buildStage === 3 && (
-        <div className="absolute -top-2 -left-2 -right-2 -bottom-2">
-          <div className="absolute top-2 left-2 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
-          <div
-            className="absolute top-4 right-3 w-1 h-1 bg-yellow-400 rounded-full animate-ping"
-            style={{ animationDelay: "0.5s" }}
-          ></div>
-          <div
-            className="absolute bottom-3 left-1 w-1 h-1 bg-yellow-400 rounded-full animate-ping"
-            style={{ animationDelay: "1s" }}
-          ></div>
-        </div>
-      )}
-    </div>
-  );
-};
-
 export default function Welcome() {
   const navigate = useNavigate();
+  const [showContent, setShowContent] = useState(false);
+
+  const handleAnimationComplete = () => {
+    setShowContent(true);
+  };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div
+      className="h-screen bg-black text-white relative overflow-hidden"
+      style={{ height: "844px", width: "390px", margin: "0 auto" }}
+    >
       {/* iPhone status bar */}
       <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-6 py-3 text-sm font-medium z-20">
         <span>9:41</span>
@@ -130,77 +66,82 @@ export default function Welcome() {
       </div>
 
       {/* Floating background icons */}
-      <FloatingIcon x="10%" y="15%" delay={0}>
-        <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center">
-          <span className="text-white text-lg">💰</span>
+      <FloatingIcon x="8%" y="15%" delay={0}>
+        <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center">
+          <span className="text-white text-sm">💰</span>
         </div>
       </FloatingIcon>
 
-      <FloatingIcon x="80%" y="20%" delay={0.5}>
-        <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center">
-          <span className="text-white text-sm">💎</span>
+      <FloatingIcon x="78%" y="18%" delay={0.5}>
+        <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full flex items-center justify-center">
+          <span className="text-white text-xs">💎</span>
         </div>
       </FloatingIcon>
 
-      <FloatingIcon x="15%" y="35%" delay={1}>
-        <div className="w-11 h-11 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
-          <span className="text-white text-sm">🚀</span>
+      <FloatingIcon x="12%" y="30%" delay={1}>
+        <div className="w-9 h-9 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
+          <span className="text-white text-xs">🚀</span>
         </div>
       </FloatingIcon>
 
-      <FloatingIcon x="75%" y="45%" delay={1.5}>
-        <div className="w-9 h-9 bg-gradient-to-br from-orange-400 to-red-400 rounded-full flex items-center justify-center">
+      <FloatingIcon x="82%" y="35%" delay={1.5}>
+        <div className="w-7 h-7 bg-gradient-to-br from-orange-400 to-red-400 rounded-full flex items-center justify-center">
           <span className="text-white text-xs">⚡</span>
         </div>
       </FloatingIcon>
 
-      <FloatingIcon x="20%" y="60%" delay={2}>
+      <FloatingIcon x="15%" y="65%" delay={2}>
         <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-blue-400 rounded-full flex items-center justify-center">
           <span className="text-white text-xs">🔮</span>
         </div>
       </FloatingIcon>
 
-      <FloatingIcon x="85%" y="65%" delay={2.5}>
-        <div className="w-10 h-10 bg-gradient-to-br from-indigo-400 to-purple-400 rounded-full flex items-center justify-center">
-          <span className="text-white text-sm">🌟</span>
+      <FloatingIcon x="85%" y="70%" delay={2.5}>
+        <div className="w-9 h-9 bg-gradient-to-br from-indigo-400 to-purple-400 rounded-full flex items-center justify-center">
+          <span className="text-white text-xs">🌟</span>
         </div>
       </FloatingIcon>
 
       {/* Decorative stars */}
-      <div className="absolute top-1/4 right-1/4 text-yellow-400 text-2xl animate-pulse">
+      <div className="absolute top-1/4 right-1/4 text-yellow-400 text-lg animate-pulse">
         ✨
       </div>
       <div
-        className="absolute top-1/3 left-1/3 text-yellow-400 text-lg animate-pulse"
+        className="absolute top-1/3 left-1/4 text-yellow-400 text-sm animate-pulse"
         style={{ animationDelay: "1s" }}
       >
         ✨
       </div>
       <div
-        className="absolute bottom-1/3 right-1/5 text-yellow-400 text-xl animate-pulse"
+        className="absolute bottom-1/3 right-1/5 text-yellow-400 text-base animate-pulse"
         style={{ animationDelay: "2s" }}
       >
         ✨
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col items-center justify-center min-h-screen px-8 relative z-10">
-        {/* House building animation */}
-        <HouseBuildingAnimation />
+      <div className="flex flex-col items-center justify-center h-full px-8 relative z-10">
+        {/* 3D House building animation at top */}
+        <div className="absolute top-20 left-1/2 transform -translate-x-1/2">
+          <HouseAnimation loop={true} onComplete={handleAnimationComplete} />
+        </div>
 
-        {/* Central logo */}
-        <div className="mb-8">
+        {/* Central dot that transitions from splash */}
+        <div className="mb-8 mt-16">
+          <div className="w-3 h-3 bg-blue-500 rounded-full mx-auto mb-8 animate-pulse"></div>
+
+          {/* Central logo */}
           <div className="relative">
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-400 via-cyan-400 to-teal-400 rounded-full flex items-center justify-center shadow-xl">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-400 via-cyan-400 to-teal-400 rounded-full flex items-center justify-center shadow-xl">
               <img
                 src="https://cdn.builder.io/api/v1/assets/c51f377a7f5c40f8aa811e96184dc4d1/image-4883cb?format=webp&width=200"
                 alt="Spaces AI"
-                className="w-12 h-12 object-contain"
+                className="w-10 h-10 object-contain"
               />
             </div>
             {/* Outer ring */}
             <div
-              className="absolute inset-0 w-24 h-24 border-4 border-blue-500 rounded-full animate-spin"
+              className="absolute inset-0 w-20 h-20 border-3 border-blue-500 rounded-full animate-spin"
               style={{ animationDuration: "8s" }}
             ></div>
           </div>
@@ -208,7 +149,7 @@ export default function Welcome() {
 
         {/* Welcome text */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-light mb-4 leading-tight">
+          <h1 className="text-2xl font-light mb-4 leading-tight">
             Welcome to
             <br />
             <span className="font-bold">Spaces AI</span>
