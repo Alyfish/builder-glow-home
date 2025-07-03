@@ -27,15 +27,15 @@ export default function HouseAnimation({
       premultipliedAlpha: false,
     });
 
-    renderer.setSize(120, 120);
+    renderer.setSize(160, 160);
     renderer.setClearColor(0x000000, 0);
     containerRef.current.appendChild(renderer.domElement);
 
     sceneRef.current = scene;
     rendererRef.current = renderer;
 
-    // Camera position
-    camera.position.set(0, 2, 8);
+    // Camera position - adjusted for larger house
+    camera.position.set(0, 3, 10);
     camera.lookAt(0, 0, 0);
 
     // Central dot/sphere (Airbnb red)
@@ -44,60 +44,37 @@ export default function HouseAnimation({
     const centralDot = new THREE.Mesh(dotGeometry, dotMaterial);
     scene.add(centralDot);
 
-    // Line material (Airbnb red)
+    // Line material (Airbnb red) - thick stick-like lines
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0xef4444,
-      linewidth: 3,
+      linewidth: 8,
     });
 
-    // Enhanced 3D house structure points
+    // Simple large stick house structure - bigger and simpler
     const housePoints = [
-      // Foundation square (front to back)
-      { start: [0, 0, 0], end: [-1.8, -1.2, 0.8], delay: 0 },
-      { start: [0, 0, 0], end: [1.8, -1.2, 0.8], delay: 0.1 },
-      { start: [0, 0, 0], end: [1.8, -1.2, -0.8], delay: 0.2 },
-      { start: [0, 0, 0], end: [-1.8, -1.2, -0.8], delay: 0.3 },
+      // Foundation base - larger scale
+      { start: [0, 0, 0], end: [-2.5, -1.8, 1], delay: 0 },
+      { start: [0, 0, 0], end: [2.5, -1.8, 1], delay: 0.3 },
+      { start: [0, 0, 0], end: [2.5, -1.8, -1], delay: 0.6 },
+      { start: [0, 0, 0], end: [-2.5, -1.8, -1], delay: 0.9 },
 
-      // Foundation connecting lines
-      { start: [-1.8, -1.2, 0.8], end: [1.8, -1.2, 0.8], delay: 0.4 },
-      { start: [1.8, -1.2, 0.8], end: [1.8, -1.2, -0.8], delay: 0.5 },
-      { start: [1.8, -1.2, -0.8], end: [-1.8, -1.2, -0.8], delay: 0.6 },
-      { start: [-1.8, -1.2, -0.8], end: [-1.8, -1.2, 0.8], delay: 0.7 },
+      // Foundation square connecting
+      { start: [-2.5, -1.8, 1], end: [2.5, -1.8, 1], delay: 1.2 },
+      { start: [2.5, -1.8, 1], end: [2.5, -1.8, -1], delay: 1.5 },
+      { start: [2.5, -1.8, -1], end: [-2.5, -1.8, -1], delay: 1.8 },
+      { start: [-2.5, -1.8, -1], end: [-2.5, -1.8, 1], delay: 2.1 },
 
-      // Vertical walls
-      { start: [-1.8, -1.2, 0.8], end: [-1.8, 1.2, 0.8], delay: 0.8 },
-      { start: [1.8, -1.2, 0.8], end: [1.8, 1.2, 0.8], delay: 0.9 },
-      { start: [1.8, -1.2, -0.8], end: [1.8, 1.2, -0.8], delay: 1.0 },
-      { start: [-1.8, -1.2, -0.8], end: [-1.8, 1.2, -0.8], delay: 1.1 },
+      // Vertical walls - large sticks
+      { start: [-2.5, -1.8, 1], end: [-2.5, 1.8, 1], delay: 2.4 },
+      { start: [2.5, -1.8, 1], end: [2.5, 1.8, 1], delay: 2.7 },
+      { start: [2.5, -1.8, -1], end: [2.5, 1.8, -1], delay: 3.0 },
+      { start: [-2.5, -1.8, -1], end: [-2.5, 1.8, -1], delay: 3.3 },
 
-      // Top frame
-      { start: [-1.8, 1.2, 0.8], end: [1.8, 1.2, 0.8], delay: 1.2 },
-      { start: [1.8, 1.2, 0.8], end: [1.8, 1.2, -0.8], delay: 1.3 },
-      { start: [1.8, 1.2, -0.8], end: [-1.8, 1.2, -0.8], delay: 1.4 },
-      { start: [-1.8, 1.2, -0.8], end: [-1.8, 1.2, 0.8], delay: 1.5 },
-
-      // Roof peak and supports
-      { start: [-1.8, 1.2, 0.8], end: [0, 2.4, 0], delay: 1.6 },
-      { start: [1.8, 1.2, 0.8], end: [0, 2.4, 0], delay: 1.7 },
-      { start: [1.8, 1.2, -0.8], end: [0, 2.4, 0], delay: 1.8 },
-      { start: [-1.8, 1.2, -0.8], end: [0, 2.4, 0], delay: 1.9 },
-
-      // Door frame
-      { start: [0, -1.2, 0.8], end: [0, 0.4, 0.8], delay: 2.0 },
-      { start: [-0.4, -1.2, 0.8], end: [-0.4, 0.4, 0.8], delay: 2.1 },
-      { start: [0.4, -1.2, 0.8], end: [0.4, 0.4, 0.8], delay: 2.2 },
-      { start: [-0.4, 0.4, 0.8], end: [0.4, 0.4, 0.8], delay: 2.3 },
-
-      // Windows
-      { start: [-1.2, 0.2, 0.8], end: [-0.6, 0.2, 0.8], delay: 2.4 },
-      { start: [-1.2, 0.8, 0.8], end: [-0.6, 0.8, 0.8], delay: 2.5 },
-      { start: [-1.2, 0.2, 0.8], end: [-1.2, 0.8, 0.8], delay: 2.6 },
-      { start: [-0.6, 0.2, 0.8], end: [-0.6, 0.8, 0.8], delay: 2.7 },
-
-      { start: [0.6, 0.2, 0.8], end: [1.2, 0.2, 0.8], delay: 2.8 },
-      { start: [0.6, 0.8, 0.8], end: [1.2, 0.8, 0.8], delay: 2.9 },
-      { start: [0.6, 0.2, 0.8], end: [0.6, 0.8, 0.8], delay: 3.0 },
-      { start: [1.2, 0.2, 0.8], end: [1.2, 0.8, 0.8], delay: 3.1 },
+      // Roof - simple triangular peak
+      { start: [-2.5, 1.8, 1], end: [0, 3.2, 0], delay: 3.6 },
+      { start: [2.5, 1.8, 1], end: [0, 3.2, 0], delay: 3.9 },
+      { start: [2.5, 1.8, -1], end: [0, 3.2, 0], delay: 4.2 },
+      { start: [-2.5, 1.8, -1], end: [0, 3.2, 0], delay: 4.5 },
     ];
 
     const lines: THREE.Line[] = [];
@@ -189,8 +166,8 @@ export default function HouseAnimation({
   return (
     <div
       ref={containerRef}
-      className="w-30 h-30 flex items-center justify-center"
-      style={{ width: "120px", height: "120px" }}
+      className="w-40 h-40 flex items-center justify-center"
+      style={{ width: "160px", height: "160px" }}
     />
   );
 }
