@@ -68,15 +68,16 @@ export default function Welcome() {
       {/* Main content */}
       <div className="flex flex-col items-center justify-center h-full px-8 relative z-10">
         {/* Large centered dot */}
-        <div className="mb-16">
-          <div className="w-8 h-8 bg-blue-500 rounded-full mx-auto animate-pulse"></div>
-        </div>
+        <div className="mb-16"></div>
 
-        {/* Main text - Coinbase style */}
-        <div className="text-center">
-          <h1 className="text-5xl font-light tracking-wide text-black">
-            Spaces.
-          </h1>
+        {/* Main text with dot - Coinbase style */}
+        <div className="flex flex-row">
+          <div className="text-center">
+            <div className="text-5xl font-light tracking-wide text-black">
+              <p>Spaces</p>
+            </div>
+          </div>
+          <div className="w-8 h-8 bg-blue-500 rounded-full animate-pulse mt-3 ml-auto mr-auto"></div>
         </div>
       </div>
 
