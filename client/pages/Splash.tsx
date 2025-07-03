@@ -1,22 +1,42 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export default function Splash() {
   const navigate = useNavigate();
+  const [showButtons, setShowButtons] = useState(false);
+  const [animatingDot, setAnimatingDot] = useState(false);
 
   useEffect(() => {
-    // Auto-navigate to welcome screen after 2.5 seconds
-    const timer = setTimeout(() => {
-      navigate("/welcome");
-    }, 2500);
+    // Show buttons after 1 second
+    const buttonTimer = setTimeout(() => {
+      setShowButtons(true);
+    }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [navigate]);
+    return () => clearTimeout(buttonTimer);
+  }, []);
+
+  const handleCreateAccount = () => {
+    setAnimatingDot(true);
+    setTimeout(() => {
+      navigate("/welcome");
+    }, 800);
+  };
+
+  const handleSignIn = () => {
+    setAnimatingDot(true);
+    setTimeout(() => {
+      navigate("/signin");
+    }, 800);
+  };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white relative overflow-hidden">
-      {/* iPhone status bar simulation */}
-      <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-6 py-3 text-sm font-medium">
+    <div
+      className="h-screen bg-black flex flex-col text-white relative overflow-hidden"
+      style={{ height: "844px", width: "390px", margin: "0 auto" }}
+    >
+      {/* iPhone status bar */}
+      <div className="absolute top-0 left-0 right-0 flex justify-between items-center px-6 py-3 text-sm font-medium z-20">
         <span>9:41</span>
         <div className="flex items-center gap-1">
           <div className="flex gap-0.5">
@@ -40,26 +60,44 @@ export default function Splash() {
         </div>
       </div>
 
-      {/* Logo placeholder - using the provided image */}
-      <div className="mb-8">
-        <img
-          src="https://cdn.builder.io/api/v1/assets/c51f377a7f5c40f8aa811e96184dc4d1/image-11365c?format=webp&width=200"
-          alt="Spaces AI Logo"
-          className="w-16 h-16 object-contain"
-        />
-      </div>
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col items-center justify-center px-8">
+        {/* Brand text with animated dot */}
+        <div className="text-center mb-12">
+          <div className="relative">
+            <h1 className="text-4xl font-light tracking-wider text-white">
+              spaces
+              <span
+                className={`inline-block w-3 h-3 bg-blue-500 rounded-full ml-1 transition-all duration-800 ${
+                  animatingDot ? "transform scale-150 animate-ping" : ""
+                }`}
+              ></span>
+            </h1>
+          </div>
+        </div>
 
-      {/* Main text */}
-      <div className="text-center">
-        <h1 className="text-3xl font-light tracking-wide">
-          <span className="font-normal">spaces</span>{" "}
-          <span className="font-bold">AI</span>
-        </h1>
-      </div>
+        {/* Buttons with fade-in animation */}
+        <div
+          className={`w-full max-w-sm space-y-4 transition-all duration-500 ${
+            showButtons
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+          }`}
+        >
+          <Button
+            className="w-full bg-white text-black hover:bg-gray-100 font-medium py-4 text-base rounded-2xl transition-all duration-200 hover:scale-105"
+            onClick={handleCreateAccount}
+          >
+            Create new account
+          </Button>
 
-      {/* Bottom indicator */}
-      <div className="absolute bottom-8 w-32 h-1 bg-white/20 rounded-full">
-        <div className="h-full bg-white rounded-full animate-pulse"></div>
+          <button
+            className="w-full text-white text-base font-medium py-4 hover:text-gray-300 transition-all duration-200 hover:scale-105"
+            onClick={handleSignIn}
+          >
+            I already have an account
+          </button>
+        </div>
       </div>
 
       {/* Bottom attribution */}
